@@ -1,0 +1,23 @@
+---
+
+- name: Add the GPG key for the Debian Docker repository
+  apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
+    state: present
+
+- name: Add the Docker Debian repository
+  apt_repository:
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/debian stretch stable'
+    state: present
+    update_cache: yes
+
+- name: Install Docker
+  package:
+    name: docker-ce
+    state: latest
+
+- name: Start and enable Docker on boot
+  service:
+    name: docker
+    enabled: yes
+    state: started
